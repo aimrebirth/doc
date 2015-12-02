@@ -17,6 +17,11 @@
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
+% paragraph indent
+\setlength{\parindent}{1.25cm}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
 % allow russian letters in formulas
 \DeclareSymbolFont{cyrletters}{\encodingdefault}{\familydefault}{m}{it}
 \newcommand{\makecyrmathletter}[1]{%
@@ -51,6 +56,7 @@
 
 \begin{titlepage}
 \centering
+\vspace*{7cm}
 {\huge\bfseries Polygon-4\par}
 \vspace{1.5cm}
 {\Large Руководство\par}
@@ -59,7 +65,7 @@ lzwdgc
 \vfill
 {\today\par}
 \end{titlepage}
-
+\setcounter{page}{2}
 \tableofcontents
 
 \chapter*{Введение}
@@ -111,6 +117,17 @@ lzwdgc
 Запустить BootstrapTools.exe для установки набора утилит.
 
 Для корректной работы утилит требуется скачать и установить пакет Visual C++ Redistributable for Visual Studio 2015 (\href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe}{ссылка}).
+
+\section{Обновление установщика}
+
+Иногда, при внесении серьёзных изменений в сам установщик, может потребоваться обновить его.
+Для этого необходимо запустить файл BootstrapUpdater.exe.
+
+\section{Журнал работы программ}
+
+Если в работе установщика происходит сбой, то соответствующую информацию об ошибке всегда можно найти в журнале его работы.
+Журнал обычно имеет то же имя, что и программа, которая выполнялась, плюс .log.info или .log.trace на конце имени.
+Файл, оканчивающийся на .info, является кратким журналом, на .trace - подробным.
 
 \chapter{Физика}
 
@@ -192,8 +209,18 @@ k_{add} =\frac{h_{g}}{h_{a}}.
 
 \chapter{Программный код}
 
+Исходные коды проекта, утилит и документации находятся в открытом доступе на GitHub, и их можно найти по \href{https://github.com/aimrebirth}{ссылке}.
+
 \chapter*{Заключение}
 \addcontentsline{toc}{chapter}{Заключение}
 
-%\Bibliography
+\chapter*{Полезные ссылки}
+\addcontentsline{toc}{chapter}{Полезные ссылки}
+
+\begin{itemize}
+\item \href{https://github.com/aimrebirth}{Проект на GitHub}
+\item \href{https://www.dropbox.com/s/0zhbgb1ftspcv9w/polygon4.zip?dl=1}{Пакет установщика}
+\item \href{https://www.dropbox.com/s/ipnakg5civ0xp0g/Polygon4_ru.pdf?dl=1}{Документация}
+\end{itemize}
+
 \end{document}
