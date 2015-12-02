@@ -1,0 +1,199 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{amsmath, amsthm, amssymb} % formulas
+\usepackage{unicode-math}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[english,russian]{babel} % for russian hyphenation
+
+\usepackage{xspace}
+\usepackage[a4paper,top=25mm,bottom=25mm,left=25mm,right=25mm,includefoot,heightrounded]{geometry} % page geometry
+
+\usepackage[
+	pdftoolbar = false,
+	pdffitwindow = true,
+	colorlinks = true,
+]{hyperref}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% allow russian letters in formulas
+\DeclareSymbolFont{cyrletters}{\encodingdefault}{\familydefault}{m}{it}
+\newcommand{\makecyrmathletter}[1]{%
+  \begingroup\lccode`a=#1\lowercase{\endgroup
+  \Umathcode`a}="0 \csname symcyrletters\endcsname\space #1
+}
+\count255="409
+\loop\ifnum\count255<"44F
+  \advance\count255 by 1
+  \makecyrmathletter{\count255}
+\repeat
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% work settings
+\author{lzwdgc}
+\title{Polygon-4}
+\newcommand{\GraphicsPath}{src/img/}
+% work settings
+
+% document settings
+%\input{src/pagesetup.tex}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\newcommand{\ue}{UE4\xspace}
+\newcommand{\pf}{Polygon-4\xspace}
+
+% document
+\begin{document}
+\large % 14pt
+
+\begin{titlepage}
+\centering
+{\huge\bfseries Polygon-4\par}
+\vspace{1.5cm}
+{\Large Руководство\par}
+\vspace{1.5cm}
+lzwdgc
+\vfill
+{\today\par}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter*{Введение}
+\addcontentsline{toc}{chapter}{Введение}
+
+Графическая составляющая, описываемая в этом документе, относится к игровому движку Unreal Engine 4 (\ue).
+
+Последняя версия данной документации всегда доступна по \href{https://www.dropbox.com/s/ipnakg5civ0xp0g/Polygon4_ru.pdf?dl=1}{ссылке}.
+
+\chapter{Установка}
+
+\section{Пакет установщика}
+
+Установка \pf производится в полуавтоматическом режиме с использованием программ развёртывания.
+Для того, чтобы скачать данную программу, необходимо выполнить следующие действия:
+
+\begin{enumerate}
+\item Скачать пакет установщика по \href{https://www.dropbox.com/s/0zhbgb1ftspcv9w/polygon4.zip?dl=1}{ссылке}.
+\item Распаковать в папку, в имени которой есть только английские буквы. Например, D:\backslash AIM.
+\end{enumerate}
+
+
+\section{Версия разработчика}
+
+\subsection{Зависимости}
+
+Для корректной установки и развёртывания проекта необходимо скачать и установить следующие бесплатные программы.
+
+\begin{enumerate}
+\item CMake версии 3.4 или выше (\url{https://cmake.org/}).  \href{https://cmake.org/files/v3.4/cmake-3.4.0-win32-x86.exe}{Скачать}. При установке указать добавление программы в PATH!
+\item Git (\url{https://git-scm.com}). \href{https://git-scm.com/download/win}{Скачать}. При установке указать добавление программы в PATH!
+\item Visual Studio 2015 Community (\url{https://www.visualstudio.com}). \href{https://go.microsoft.com/fwlink/?LinkId=691978}{Скачать}. При установке обязательно выбрать компоненты Visual C++! Установку производить в директорию по умолчанию на диске C:.
+\item Unreal Engine 4 (\url{https://unrealengine.com/}).
+\end{enumerate}
+
+\subsection{Установка}
+
+После скачивания и установки программы-установщика, всех зависимостей необходимо запустить BootstrapDeveloper.exe для установки версии разработчика.
+Проект будет загружен и распакован в директорию \\Polygon4Developer.
+В нём вы найдёте файлы проектов С++ \\(Polygon4Developer/ThirdParty/Engine/Win64/Engine.sln,\\ Polygon4Developer/Polygon4.sln), а также файл проекта \ue\\ (Polygon4Developer/Polygon4.ueproject).
+
+
+\section{Версия пользователя}
+
+Запустить BootstrapRelease.exe для установки релизной версии.
+
+\section{Утилиты}
+
+Запустить BootstrapTools.exe для установки набора утилит.
+
+Для корректной работы утилит требуется скачать и установить пакет Visual C++ Redistributable for Visual Studio 2015 (\href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe}{ссылка}).
+
+\chapter{Физика}
+
+\section{Общие положения}
+
+Система координат - трёхмерная, измерения - XYZ. Время изменяется дискретно. Соответственно действия над глайдером производятся в определённые моменты.
+
+В \ue единицей измерения являются юниты - Unreal Units (uu). Будем считать, что
+\begin{equation}
+1uu = 1см,
+\end{equation}
+тогда 
+\begin{equation}
+100uu = 1м.
+\end{equation}
+
+Ускорение свободного падения
+\begin{equation}
+g = 980uu/с^2 = 9.8м/с^2.
+\end{equation}
+
+Управление перемещением глайдера осуществляется путём применения к нему различных сил. Движение осуществляется по результирующей силе на каждом тике времени, которая равна сумме всех сил
+\begin{equation}
+\vec{F} = \vec{F_1} + \vec{F_2} + \dots + \vec{F_n}.
+\end{equation}
+
+В любой момент времени на глайдер действует сила тяжести
+\begin{equation}
+\vec{P} = m\vec{g}.
+\end{equation}
+
+\section{Состояние покоя}
+
+В состоянии покоя на глайдер действуют следующие силы.
+
+Сила антиграва
+\begin{equation}
+\vec{F_a} =
+-m\vec{g}.
+\end{equation}
+
+\section{Движение вдоль Oz}
+
+Сила антиграва
+\begin{equation}
+\label{antigrav_force}
+\vec{F_a} =
+\begin{cases}
+0, & \quad \text{при } h_{g} > h_a \\
+-m\vec{g}, & \quad \text{при } h_{g} = h_a \\
+-m\vec{g}(1+ k_{add}), & \quad \text{при } h_{g} < h_a \\
+\end{cases}
+\end{equation}
+где $h_{g}$ -- высота глайдера над поверхностью, $h_a$ -- уровень, на котором антиграв должен удерживать глайдер над землёй, $k_{add}$ -- коэффициент дополнительной подъёмной силы антиграва, препятствующей столкновению с землёй.
+Сила антиграва направлена строго вверх.
+
+При $h_g < h_a$ сила отталкивания тем больше, чем меньше расстояние до земли
+\begin{equation}
+k_{add} =\frac{h_{g}}{h_{a}}.
+\end{equation}
+
+Для обеспечения плавности снижения допустимо ввести силу антиграва при $h_{g} > h_a$. Таким образом, формула \eqref{antigrav_force} будет иметь вид
+
+\begin{equation}
+\vec{F_a} =
+\begin{cases}
+0, & \quad \text{при } h_{g} > k h_a \\
+-m\vec{g}(1+ k_{add}), & \quad \text{при } h_{g} \le k h_a \\
+\end{cases}
+\end{equation}
+где $k=2,3,\dots$. Примем $k=3$.
+
+\chapter{Оборудование и глайдеры}
+\section{Глайдеры}
+\section{Оружие}
+\section{Оборудование}
+
+Антигравитатор (антиграв) --- устройство, позволяющее глайдеру "<парить"> над землёй.
+
+\chapter{Программный код}
+
+\chapter*{Заключение}
+\addcontentsline{toc}{chapter}{Заключение}
+
+%\Bibliography
+\end{document}

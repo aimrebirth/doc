@@ -1,0 +1,17 @@
+# dirs
+/old
+
+# tex files
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+*.toc
+*.out
+*.pdf
+*.synctex.gz
+*.ps
+*.bak
+*.bcf
+*.run.xml
