@@ -9,6 +9,12 @@
 \usepackage{xspace}
 \usepackage[a4paper,top=25mm,bottom=25mm,left=25mm,right=25mm,includefoot,heightrounded]{geometry} % page geometry
 
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+
 \usepackage[
 	pdftoolbar = false,
 	pdffitwindow = true,
@@ -47,6 +53,22 @@
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
+\newcommand*\keystroke[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=2pt,
+      inner sep=3pt,
+      line width=0.5pt
+    ](key) {#1\strut}
+  ;
+}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
 \newcommand{\ue}{UE4\xspace}
 \newcommand{\pf}{Polygon-4\xspace}
 
@@ -79,6 +101,11 @@ lzwdgc
 
 \section{Пакет установщика}
 
+
+\textbf{ВАЖНО!} Для корректной работы \pf и любых утилит требуется скачать и установить пакеты Visual C++ Redistributable for Visual Studio 2015 (\href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe}{32 бита}, \href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe}{64 бита}).
+Обязательна установка 32 битной версии пакета.
+Может потребоваться одновременная установка обеих версий.
+
 Установка \pf производится в полуавтоматическом режиме с использованием программ развёртывания.
 Для того, чтобы скачать данную программу, необходимо выполнить следующие действия:
 
@@ -86,6 +113,17 @@ lzwdgc
 \item Скачать пакет установщика по \href{https://www.dropbox.com/s/0zhbgb1ftspcv9w/polygon4.zip?dl=1}{ссылке}.
 \item Распаковать в папку, в имени которой есть только английские буквы. Например, D:\backslash AIM.
 \end{enumerate}
+
+\section{Версия пользователя (релизная)}
+
+Запустить BootstrapRelease.exe для установки релизной версии.
+Для игры запустить Polygon4.exe в папке Polygon4Release.
+
+\subsection{Установка}
+
+Первоначальная установка может занять долгое время (1-2 часа).
+Это необходимо из-за специфики процесса распространения установочных файлов проекта.
+Последующие обновления проекта производятся запуском той же программы, но, в отличие от первоначальной установки, будут загружены лишь недостающие или изменённые файлы.
 
 
 \section{Версия разработчика}
@@ -107,16 +145,15 @@ lzwdgc
 Проект будет загружен и распакован в директорию \\Polygon4Developer.
 В нём вы найдёте файлы проектов С++ \\(Polygon4Developer/ThirdParty/Engine/Win64/Engine.sln,\\ Polygon4Developer/Polygon4.sln), а также файл проекта \ue\\ (Polygon4Developer/Polygon4.ueproject).
 
+Первоначальная установка может занять долгое время (1-2 часа).
+Это необходимо из-за специфики процесса распространения установочных файлов проекта.
+Последующие обновления проекта производятся запуском той же программы, но, в отличие от первоначальной установки, будут загружены лишь недостающие или изменённые файлы.
 
-\section{Версия пользователя}
-
-Запустить BootstrapRelease.exe для установки релизной версии.
 
 \section{Утилиты}
 
 Запустить BootstrapTools.exe для установки набора утилит.
 
-Для корректной работы утилит требуется скачать и установить пакет Visual C++ Redistributable for Visual Studio 2015 (\href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe}{ссылка}).
 
 \section{Обновление установщика}
 
@@ -128,6 +165,36 @@ lzwdgc
 Если в работе установщика происходит сбой, то соответствующую информацию об ошибке всегда можно найти в журнале его работы.
 Журнал обычно имеет то же имя, что и программа, которая выполнялась, плюс .log.info или .log.trace на конце имени.
 Файл, оканчивающийся на .info, является кратким журналом, на .trace - подробным.
+
+\section{Управление}
+
+\begin{longtable}{|c|c|}
+\hline
+
+Клавиша & Функция\\ \hline
+\endfirsthead
+
+\hline
+Клавиша & Функция\\ \hline
+\endhead
+
+\keystroke{W} & движение вперёд \\ \hline
+\keystroke{A} & движение влево \\ \hline
+\keystroke{S} & движение назад \\ \hline
+\keystroke{D} & движение вправо \\ \hline
+\keystroke{Alt} + \keystroke{Z} & показать/скрыть интерфейс \\ \hline
+
+\keystroke{Pause}, \keystroke{P} & пауза \\ \hline
+\keystroke{F1}, \keystroke{V} & сменить вид \\ \hline
+\keystroke{Esc} & выход \\ \hline
+\keystroke{Shift} & ускорение \\ \hline
+\keystroke{Space} & прыжок \\ \hline
+ЛКМ & выстрел из лёгкого оружия \\ \hline
+ПКМ & выстрел из тяжёлого оружия \\ \hline
+
+\end{longtable}
+
+
 
 \chapter{Физика}
 
@@ -221,6 +288,8 @@ k_{add} =\frac{h_{g}}{h_{a}}.
 \item \href{https://github.com/aimrebirth}{Проект на GitHub}
 \item \href{https://www.dropbox.com/s/0zhbgb1ftspcv9w/polygon4.zip?dl=1}{Пакет установщика}
 \item \href{https://www.dropbox.com/s/ipnakg5civ0xp0g/Polygon4_ru.pdf?dl=1}{Документация}
+\item \href{http://aim-fans.ru/index.php?showtopic=147}{Тема на aim-fans.ru}
+\item \href{http://forum.skyriver.ru/viewtopic.php?f=26&t=4801}{Тема на skyriver.ru}
 \end{itemize}
 
 \end{document}
