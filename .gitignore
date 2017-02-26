@@ -1,5 +1,6 @@
 # dirs
 /old
+/build
 
 # tex files
 *.aux
@@ -15,3 +16,4 @@
 *.bak
 *.bcf
 *.run.xml
+
