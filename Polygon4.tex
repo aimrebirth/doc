@@ -1,0 +1,309 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{amsmath, amsthm, amssymb} % formulas
+\usepackage{unicode-math}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\usepackage{xspace}
+\usepackage[a4paper,top=25mm,bottom=25mm,left=25mm,right=25mm,includefoot,heightrounded]{geometry} % page geometry
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+
+\usepackage[
+	pdftoolbar = false,
+	pdffitwindow = true,
+	colorlinks = true,
+]{hyperref}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% paragraph indent
+\setlength{\parindent}{1.25cm}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% work settings
+\author{lz}
+\title{Polygon-4}
+\newcommand{\GraphicsPath}{src/img/}
+% work settings
+
+% document settings
+%\input{src/pagesetup.tex}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\newcommand*\keystroke[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=2pt,
+      inner sep=3pt,
+      line width=0.5pt
+    ](key) {#1\strut}
+  ;
+}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\newcommand{\ue}{UE4\xspace}
+\newcommand{\pf}{Polygon-4\xspace}
+
+% document
+\begin{document}
+\large % 14pt
+
+\begin{titlepage}
+\centering
+\vspace*{7cm}
+{\huge\bfseries Polygon-4\par}
+\vspace{1.5cm}
+{\Large User \& Developer Guide\par}
+\vspace{1.5cm}
+lz
+\vfill
+{\today\par}
+\end{titlepage}
+\setcounter{page}{2}
+\tableofcontents
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+Графическая составляющая, описываемая в этом документе, относится к игровому движку Unreal Engine 4 (\ue).
+
+Последняя версия данной документации всегда доступна по \href{https://www.dropbox.com/s/ipnakg5civ0xp0g/Polygon4_ru.pdf?dl=1}{ссылке}.
+
+\chapter{Installation}
+
+\section{Installation package}
+
+
+\textbf{ВАЖНО!} Для корректной работы \pf и любых утилит требуется скачать и установить пакеты Visual C++ Redistributable for Visual Studio 2015 (\href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe}{32 бита}, \href{https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe}{64 бита}).
+Обязательна установка 32 битной версии пакета.
+Может потребоваться одновременная установка обеих версий.
+
+Установка \pf производится в полуавтоматическом режиме с использованием программ развёртывания.
+Для того, чтобы скачать данную программу, необходимо выполнить следующие действия:
+
+\begin{enumerate}
+\item Скачать пакет установщика по \href{https://www.dropbox.com/s/0zhbgb1ftspcv9w/polygon4.zip?dl=1}{ссылке}.
+\item Распаковать в папку, в имени которой есть только английские буквы. Например, D:\backslash AIM.
+\end{enumerate}
+
+\section{Release version}
+
+Запустить BootstrapRelease.exe для установки релизной версии.
+Для игры запустить Polygon4.exe в папке Polygon4Release.
+
+Данная версия обновляется крайне редко и не рекомендуется к использованию на данный момент.
+
+\subsection{Installation}
+
+Каждая установка займёт долгое время (1-2 часа).
+
+\section{Nightly version}
+
+Запустить BootstrapLatest.exe для установки nightly-версии.
+Для игры запустить Polygon4.bat в папке с программой-установщиком.
+
+\subsection{Installation}
+
+Первоначальная установка может занять долгое время (1-2 часа).
+Это необходимо из-за специфики процесса распространения установочных файлов проекта.
+Последующие обновления проекта производятся запуском той же программы, но, в отличие от первоначальной установки, будут загружены лишь недостающие или изменённые файлы.
+
+
+\section{Development version}
+
+\subsection{Dependencies}
+
+Для корректной установки и развёртывания проекта необходимо скачать и установить следующие бесплатные программы.
+
+\begin{enumerate}
+\item CMake версии 3.4 или выше (\url{https://cmake.org/}).  \href{https://cmake.org/files/v3.4/cmake-3.4.0-win32-x86.exe}{Скачать}. При установке указать добавление программы в PATH!
+\item Git (\url{https://git-scm.com}). \href{https://git-scm.com/download/win}{Скачать}. При установке указать добавление программы в PATH!
+\item Visual Studio 2015 Community (\url{https://www.visualstudio.com}). \href{https://go.microsoft.com/fwlink/?LinkId=691978}{Скачать}. При установке обязательно выбрать компоненты Visual C++! Установку производить в директорию по умолчанию на диске C:.
+\item Unreal Engine 4 (\url{https://unrealengine.com/}).
+\end{enumerate}
+
+\subsection{Installation}
+
+После скачивания и установки программы-установщика, всех зависимостей необходимо запустить BootstrapDeveloper.exe для установки версии разработчика.
+Проект будет загружен и распакован в директорию \\Polygon4Developer.
+В нём вы найдёте файлы проектов С++ \\(Polygon4Developer/ThirdParty/Engine/Win64/Engine.sln,\\ Polygon4Developer/Polygon4.sln), а также файл проекта \ue\\ (Polygon4Developer/Polygon4.ueproject).
+
+Первоначальная установка может занять долгое время (1-2 часа).
+Это необходимо из-за специфики процесса распространения установочных файлов проекта.
+Последующие обновления проекта производятся запуском той же программы, но, в отличие от первоначальной установки, будут загружены лишь недостающие или изменённые файлы.
+
+
+\section{Utilities}
+
+Запустить BootstrapTools.exe для установки набора утилит.
+
+
+\section{Bootstrap updater}
+
+Иногда, при внесении серьёзных изменений в сам установщик, может потребоваться обновить его.
+Для этого необходимо запустить файл BootstrapUpdater.exe.
+
+\section{Logs}
+
+Если в работе установщика происходит сбой, то соответствующую информацию об ошибке всегда можно найти в журнале его работы.
+Журнал обычно имеет то же имя, что и программа, которая выполнялась, плюс .log.info или .log.trace на конце имени.
+Файл, оканчивающийся на .info, является кратким журналом, на .trace - подробным.
+
+\section{Controls}
+
+\begin{longtable}{|c|c|}
+\hline
+
+Клавиша & Функция\\ \hline
+\endfirsthead
+
+\hline
+Клавиша & Функция\\ \hline
+\endhead
+
+\keystroke{W} & движение вперёд \\ \hline
+\keystroke{A} & движение влево \\ \hline
+\keystroke{S} & движение назад \\ \hline
+\keystroke{D} & движение вправо \\ \hline
+\keystroke{Alt} + \keystroke{Z} & показать/скрыть интерфейс \\ \hline
+
+\keystroke{Pause}, \keystroke{P} & пауза \\ \hline
+\keystroke{F1}, \keystroke{V} & сменить вид \\ \hline
+\keystroke{Esc} & выход \\ \hline
+\keystroke{Shift} & ускорение \\ \hline
+\keystroke{Space} & прыжок \\ \hline
+ЛКМ & выстрел из лёгкого оружия \\ \hline
+ПКМ & выстрел из тяжёлого оружия \\ \hline
+
+\end{longtable}
+
+
+
+\chapter{Physics}
+
+\section{General}
+
+Система координат - трёхмерная, измерения - XYZ. Время изменяется дискретно. Соответственно действия над глайдером производятся в определённые моменты.
+
+В \ue единицей измерения являются юниты - Unreal Units (uu). Будем считать, что
+\begin{equation}
+1uu = 1см,
+\end{equation}
+тогда 
+\begin{equation}
+100uu = 1м.
+\end{equation}
+
+Ускорение свободного падения
+\begin{equation}
+g = 980uu/с^2 = 9.8м/с^2.
+\end{equation}
+
+Управление перемещением глайдера осуществляется путём применения к нему различных сил. Движение осуществляется по результирующей силе на каждом тике времени, которая равна сумме всех сил
+\begin{equation}
+\vec{F} = \vec{F_1} + \vec{F_2} + \dots + \vec{F_n}.
+\end{equation}
+
+В любой момент времени на глайдер действует сила тяжести
+\begin{equation}
+\vec{P} = m\vec{g}.
+\end{equation}
+
+\section{Состояние покоя}
+
+В состоянии покоя на глайдер действуют следующие силы.
+
+Сила антиграва
+\begin{equation}
+\vec{F_a} =
+-m\vec{g}.
+\end{equation}
+
+\section{Oz movement}
+
+Сила антиграва
+\begin{equation}
+\label{antigrav_force}
+\vec{F_a} =
+\begin{cases}
+0, & \quad \text{при } h_{g} > h_a \\
+-m\vec{g}, & \quad \text{при } h_{g} = h_a \\
+-m\vec{g}(1+ k_{add}), & \quad \text{при } h_{g} < h_a \\
+\end{cases}
+\end{equation}
+где $h_{g}$ -- высота глайдера над поверхностью, $h_a$ -- уровень, на котором антиграв должен удерживать глайдер над землёй, $k_{add}$ -- коэффициент дополнительной подъёмной силы антиграва, препятствующей столкновению с землёй.
+Сила антиграва направлена строго вверх.
+
+При $h_g < h_a$ сила отталкивания тем больше, чем меньше расстояние до земли
+\begin{equation}
+k_{add} =\frac{h_{g}}{h_{a}}.
+\end{equation}
+
+Для обеспечения плавности снижения допустимо ввести силу антиграва при $h_{g} > h_a$. Таким образом, формула \eqref{antigrav_force} будет иметь вид
+
+\begin{equation}
+\vec{F_a} =
+\begin{cases}
+0, & \quad \text{при } h_{g} > k h_a \\
+-m\vec{g}(1+ k_{add}), & \quad \text{при } h_{g} \le k h_a \\
+\end{cases}
+\end{equation}
+где $k=2,3,\dots$. Примем $k=3$.
+
+\chapter{Gliders and equipment}
+\section{Gliders}
+\section{Weapons}
+\section{Equipment}
+
+Антигравитатор (антиграв) --- устройство, позволяющее глайдеру "<парить"> над землёй.
+
+\chapter{Source code}
+
+Исходные коды проекта, утилит и документации находятся в открытом доступе на GitHub, и их можно найти по \href{https://github.com/aimrebirth}{ссылке}.
+
+\section{String specifiers}
+
+\begin{longtable}{|l|l|}
+\hline
+
+Спецификатор & Описание\\ \hline
+\endfirsthead
+
+\hline
+Спецификатор & Описание\\ \hline
+\endhead
+
+\%bn & название здания \\ \hline
+\%pn & имя игрока \\ \hline
+\%rn & название текущего уровня рейтинга \\ \hline
+
+\end{longtable}
+
+\chapter*{Ending}
+\addcontentsline{toc}{chapter}{Ending}
+
+\chapter*{Useful links}
+\addcontentsline{toc}{chapter}{Useful links}
+
+\begin{itemize}
+\item \href{https://github.com/aimrebirth}{Проект на GitHub}
+\item \href{https://www.dropbox.com/s/0zhbgb1ftspcv9w/polygon4.zip?dl=1}{Пакет установщика}
+\item \href{https://www.dropbox.com/s/ipnakg5civ0xp0g/Polygon4_ru.pdf?dl=1}{Документация}
+\item \href{http://aim-fans.ru/index.php?showtopic=147}{Тема на aim-fans.ru}
+\item \href{http://forum.skyriver.ru/viewtopic.php?f=26&t=4801}{Тема на skyriver.ru}
+\end{itemize}
+
+\end{document}
